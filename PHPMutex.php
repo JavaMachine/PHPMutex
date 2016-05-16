@@ -8,9 +8,8 @@
  */
 class PHPMutex
 {
-
     private $config;
-    private $name;
+    private $fileResource;
 
     /**
      * PHPMutex constructor.
@@ -20,23 +19,33 @@ class PHPMutex
     public function __construct(\Config $config, $name)
     {
         $this->config = $config;
-        $this->name = $name;
+        $this->fileResource = fopen($this->config->getDirPath().'/'.$name.'.lock', "w+");
     }
 
-    public function setLockOrWait()
+    public function acquireLockOrWait()
     {
-
-        throw new TimeOutException('Failed to acquire lock, Lock wait time out');
+        $startTime = microtime();
+        $endTime = $startTime + $this->config->getTimeout();
+        while(!flock($this->fileResource, LOCK_EX)) {
+            if($startTime <= $endTime) {
+                fclose($this->fileResource);
+                throw new TimeOutException('Failed to acquire lock, Lock wait time out');
+            }
+            usleep($this->config->getCheckInterval());
+        }
     }
 
-    public function setLockOrCancel()
+    public function acquireLockOrCancel()
     {
-
-        throw new CancelException('Failed to acquire lock');
+        if (!flock($this->fileResource, LOCK_EX)) {
+            fclose($this->fileResource);
+            throw new CancelException('Failed to acquire lock');
+        }
     }
 
     public function releaseLock()
     {
-
+        flock($this->fileResource, LOCK_UN);
+        fclose($this->fileResource);
     }
 }
