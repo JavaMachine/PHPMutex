@@ -1,5 +1,9 @@
 <?php
 
+namespace JM\PHPMutex;
+
+
+
 /**
  * Created by PhpStorm.
  * User: Javokhir
@@ -16,7 +20,7 @@ class PHPMutex
      * @param Config $config
      * @param $name
      */
-    public function __construct(\Config $config, $name)
+    public function __construct(Config $config, $name)
     {
         $this->config = $config;
         $this->fileResource = fopen($this->config->getDirPath().'/'.$name.'.lock', "a+");

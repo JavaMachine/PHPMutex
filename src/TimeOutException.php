@@ -1,5 +1,6 @@
 <?php
-
+namespace JM\PHPMutex;
+use Exception;
 /**
  * Created by PhpStorm.
  * User: Javokhir

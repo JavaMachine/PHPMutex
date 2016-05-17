@@ -1,5 +1,7 @@
 <?php
 
+namespace JM\PHPMutex;
+
 /**
  * Created by PhpStorm.
  * User: Javokhir
