@@ -1,4 +1,9 @@
 <?php
+use JM\PHPMutex\CancelException;
+use JM\PHPMutex\Config;
+use JM\PHPMutex\InvalidConfigException;
+use JM\PHPMutex\PHPMutex;
+use JM\PHPMutex\TimeOutException;
 
 /**
  * Created by PhpStorm.
