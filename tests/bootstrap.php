@@ -14,3 +14,6 @@ function loader($class)
     }
 }
 spl_autoload_register('loader');
+require __DIR__.'/../src/Autoloader.php';
+
+JM\PHPMutex\Autoloader::register();
