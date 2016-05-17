@@ -28,10 +28,9 @@ class PHPMutex
 
     public function acquireLockOrWait()
     {
-        $startTime = microtime();
-        $endTime = $startTime + $this->config->getTimeout();
-        while(!flock($this->fileResource, LOCK_EX)) {
-            if($startTime <= $endTime) {
+        $endTime = microtime(true) + $this->config->getTimeout();
+        while(!flock($this->fileResource, LOCK_EX | LOCK_NB)) {
+            if(microtime(true) >= $endTime) {
                 fclose($this->fileResource);
                 throw new TimeOutException('Failed to acquire lock, Lock wait time out');
             }
@@ -41,7 +40,7 @@ class PHPMutex
 
     public function acquireLockOrCancel()
     {
-        if (!flock($this->fileResource, LOCK_EX)) {
+        if (!flock($this->fileResource, LOCK_EX | LOCK_NB)) {
             fclose($this->fileResource);
             throw new CancelException('Failed to acquire lock');
         }

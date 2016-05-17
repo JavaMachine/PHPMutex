@@ -19,11 +19,11 @@ class Config
     /**
      * Config constructor.
      * @param $dirPath
-     * @param int $timeout in microseconds
-     * @param int $checkInterval
+     * @param int $timeout in secs
+     * @param int $checkInterval in microseconds
      * @throws InvalidConfigException
      */
-    public function __construct($dirPath, $timeout = 5000000, $checkInterval = 50000) {
+    public function __construct($dirPath, $timeout = 5, $checkInterval = 50000) {
         if(!is_dir($dirPath))
             throw new InvalidConfigException('Folder does not exists');
         if(!is_writable(dirname($dirPath.'/'.$this->checkWritable)))
