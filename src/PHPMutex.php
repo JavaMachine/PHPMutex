@@ -19,7 +19,7 @@ class PHPMutex
     public function __construct(\Config $config, $name)
     {
         $this->config = $config;
-        $this->fileResource = fopen($this->config->getDirPath().'/'.$name.'.lock', "w+");
+        $this->fileResource = fopen($this->config->getDirPath().'/'.$name.'.lock', "a+");
     }
 
     public function acquireLockOrWait()
