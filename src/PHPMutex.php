@@ -20,9 +20,13 @@ class PHPMutex
      * @param Config $config
      * @param $name
      */
-    public function __construct(Config $config, $name)
+    public function __construct(Config $config = null, $name = 'def')
     {
-        $this->config = $config;
+        if($config == null) {
+            $this->config = new Config();
+        } else {
+            $this->config = $config;
+        }
         $this->fileResource = fopen($this->config->getDirPath().'/'.$name.'.lock', "a+");
     }
 
